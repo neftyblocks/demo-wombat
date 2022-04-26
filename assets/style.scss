@@ -1,0 +1,134 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+img,
+video,
+canvas {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+svg {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+iframe {
+    width: 100%;
+    border: 0;
+}
+
+input,
+button,
+textarea,
+select {
+    color: inherit;
+    font: inherit;
+}
+
+input[type='checkbox'] {
+    appearance: none;
+    padding: 0;
+    margin: 0;
+}
+
+select {
+    appearance: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+// will create specificication of 0
+ul:where([class]) {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+button {
+    display: inline-block;
+    min-width: 120px;
+    line-height: 1.4;
+    font-size: 16px;
+    padding: 8px 20px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 30px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: #9000e9;
+    color: white;
+    margin: 0 5px;
+}
+
+input {
+    display: inline-block;
+    min-width: 120px;
+    line-height: 1.4;
+    font-size: 16px;
+    padding: 8px 20px;
+    border: 2px solid rgba(0, 0, 0, 1);
+    border-radius: 30px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    font-weight: 500;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    margin: 0 5px;
+
+    &::placeholder {
+        opacity: 1;
+        color: black;
+    }
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+ul {
+    margin: 25px 0;
+}
+
+legend {
+    font-weight: 600;
+}

@@ -1,0 +1,18 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview"
+    },
+    "dependencies": {
+        "@nefty/ual": "^0.1.1",
+        "ual-wombat": "^0.3.3"
+    },
+    "devDependencies": {
+        "@babel/runtime": "^7.17.7",
+        "nuxt": "3.0.0-rc.1",
+        "sass": "^1.45.1"
+    }
+}
