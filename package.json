@@ -11,8 +11,8 @@
         "ual-wombat": "^0.3.3"
     },
     "devDependencies": {
-        "@babel/runtime": "^7.17.7",
+        "@babel/runtime": "^7.17.9",
         "nuxt": "3.0.0-rc.1",
-        "sass": "^1.45.1"
+        "sass": "^1.51.0"
     }
 }
