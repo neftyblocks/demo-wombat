@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Wallet & Transaction test</h1>
-        <button v-if="!user" @click="login()">Login with Wombat (testnet)</button>
+        <button v-if="!user" @click="login()">Login with Wombat (Mainnet)</button>
         <button v-if="user" @click="logout()">Logout</button>
 
         <div v-if="user">
@@ -33,7 +33,7 @@ const loading = ref(false);
 //------------------------------------------------------------------------------
 // Run the UAL once the app is running in the browser
 //------------------------------------------------------------------------------
-onMounted(async() => {
+onMounted(async () => {
     const endpoints: string[] = config.RPC_ENDPOINTS;
     const appName: string = config.APP_NAME;
     const network = {
@@ -62,7 +62,7 @@ const logout = () => {
 };
 
 //------------------------------------------------------------------------------
-// Methode for buying and signing transactions
+// Methode for checking drop price and signing transactions
 //------------------------------------------------------------------------------
 
 const test = async () => {

@@ -94,41 +94,9 @@ button {
     font-weight: 500;
     background-color: #9000e9;
     color: white;
-    margin: 0 5px;
-}
-
-input {
-    display: inline-block;
-    min-width: 120px;
-    line-height: 1.4;
-    font-size: 16px;
-    padding: 8px 20px;
-    border: 2px solid rgba(0, 0, 0, 1);
-    border-radius: 30px;
-    outline: none;
-    text-align: center;
-    text-decoration: none;
-    position: relative;
-    cursor: pointer;
-    font-weight: 500;
-    background-color: rgb(255, 255, 255);
-    color: black;
-    margin: 0 5px;
-
-    &::placeholder {
-        opacity: 1;
-        color: black;
-    }
+    margin: 0 5px 10px;
 }
 
 h1 {
     margin-bottom: 10px;
-}
-
-ul {
-    margin: 25px 0;
-}
-
-legend {
-    font-weight: 600;
 }
