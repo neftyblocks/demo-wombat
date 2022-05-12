@@ -19,7 +19,6 @@
 import { NuxtUser } from './types/wallets';
 import { rpcEndpoints } from './utils/networkUtils';
 import { createTransaction, transactionActions } from './utils/transactionUtils';
-import { Wombat } from 'ual-wombat';
 
 const { $ual } = useNuxtApp();
 const { public: config } = useRuntimeConfig();
@@ -30,24 +29,33 @@ let ual;
 
 const loading = ref(false);
 
-//------------------------------------------------------------------------------
-// Run the UAL once the app is running in the browser
-//------------------------------------------------------------------------------
-onMounted(async () => {
-    const endpoints: string[] = config.RPC_ENDPOINTS;
-    const appName: string = config.APP_NAME;
-    const network = {
+if (process.client) {
+    // Patch window.global for the readable-stream library (transitive dependency of ual-wombat)
+    window.global = window;
+
+    // Patch window.process.env for the util library (transitive dependency of ual-wombat)
+    window.process = { env: { } };
+    //------------------------------------------------------------------------------
+    // Run the UAL once the app is running in the browser
+    //------------------------------------------------------------------------------
+    onMounted(async () => {
+      const { Wombat } = await import('ual-wombat');
+      const endpoints: string[] = config.RPC_ENDPOINTS;
+      const appName: string = config.APP_NAME;
+      const network = {
         chainId: config.CHAIN_ID as string,
         rpcEndpoints: rpcEndpoints(endpoints),
-    };
+      };
 
-    // init the wallet
-    wallet = new Wombat([network], { appName });
+      // init the wallet
+      wallet = new Wombat([network], { appName });
+      await wallet.init();
 
-    // init ual (this is a plugin)
-    ual = $ual([wallet], (users: NuxtUser) => (user.value = users[0]));
-    ual.init();
-});
+      // init ual (this is a plugin)
+      ual = $ual([wallet], (users: NuxtUser) => (user.value = users[0]));
+      ual.init();
+    });
+}
 
 //------------------------------------------------------------------------------
 // User interactions with UAL (log in and out)
