@@ -19,7 +19,6 @@
 import { NuxtUser } from './types/wallets';
 import { rpcEndpoints } from './utils/networkUtils';
 import { createTransaction, transactionActions } from './utils/transactionUtils';
-import { Wombat } from 'ual-wombat';
 
 const { $ual } = useNuxtApp();
 const { public: config } = useRuntimeConfig();
@@ -30,24 +29,34 @@ let ual;
 
 const loading = ref(false);
 
-//------------------------------------------------------------------------------
-// Run the UAL once the app is running in the browser
-//------------------------------------------------------------------------------
-onMounted(async () => {
-    const endpoints: string[] = config.RPC_ENDPOINTS;
-    const appName: string = config.APP_NAME;
-    const network = {
-        chainId: config.CHAIN_ID as string,
-        rpcEndpoints: rpcEndpoints(endpoints),
-    };
+if (process.client) {
+    //------------------------------------------------------------------------------
+    // Run the UAL once the app is running in the browser
+    //------------------------------------------------------------------------------
+    onMounted(async () => {
+        try {
+            const { Wombat } = await import('wombat-ual');
+            const endpoints: string[] = config.RPC_ENDPOINTS;
+            const appName: string = config.APP_NAME;
+            const network = {
+              chainId: config.CHAIN_ID as string,
+              rpcEndpoints: rpcEndpoints(endpoints),
+            };
 
-    // init the wallet
-    wallet = new Wombat([network], { appName });
+            // init the wallet
+            wallet = new Wombat([network], { appName });
+            await wallet.init();
 
-    // init ual (this is a plugin)
-    ual = $ual([wallet], (users: NuxtUser) => (user.value = users[0]));
-    ual.init();
-});
+            if (!wallet.isErrored()) {
+                 // init ual (this is a plugin)
+                ual = $ual([wallet], (users: NuxtUser) => (user.value = users[0]));
+                ual.init();
+            }
+        } catch (e) {
+            console.error('onMounted failed', e)
+        }
+    });
+}
 
 //------------------------------------------------------------------------------
 // User interactions with UAL (log in and out)
