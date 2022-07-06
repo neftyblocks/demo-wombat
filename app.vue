@@ -30,30 +30,31 @@ let ual;
 const loading = ref(false);
 
 if (process.client) {
-    // Patch window.global for the readable-stream library (transitive dependency of ual-wombat)
-    window.global = window;
-
-    // Patch window.process.env for the util library (transitive dependency of ual-wombat)
-    window.process = { env: { } };
     //------------------------------------------------------------------------------
     // Run the UAL once the app is running in the browser
     //------------------------------------------------------------------------------
     onMounted(async () => {
-      const { Wombat } = await import('ual-wombat');
-      const endpoints: string[] = config.RPC_ENDPOINTS;
-      const appName: string = config.APP_NAME;
-      const network = {
-        chainId: config.CHAIN_ID as string,
-        rpcEndpoints: rpcEndpoints(endpoints),
-      };
+        try {
+            const { Wombat } = await import('wombat-ual');
+            const endpoints: string[] = config.RPC_ENDPOINTS;
+            const appName: string = config.APP_NAME;
+            const network = {
+              chainId: config.CHAIN_ID as string,
+              rpcEndpoints: rpcEndpoints(endpoints),
+            };
 
-      // init the wallet
-      wallet = new Wombat([network], { appName });
-      await wallet.init();
+            // init the wallet
+            wallet = new Wombat([network], { appName });
+            await wallet.init();
 
-      // init ual (this is a plugin)
-      ual = $ual([wallet], (users: NuxtUser) => (user.value = users[0]));
-      ual.init();
+            if (!wallet.isErrored()) {
+                 // init ual (this is a plugin)
+                ual = $ual([wallet], (users: NuxtUser) => (user.value = users[0]));
+                ual.init();
+            }
+        } catch (e) {
+            console.error('onMounted failed', e)
+        }
     });
 }
 
